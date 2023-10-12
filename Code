@@ -1,0 +1,29 @@
+import os
+from pathlib import Path
+
+# Define directories for each type of file
+DIRECTORIES = {
+    "Images": [".jpeg", ".jpg", ".tiff", ".gif", ".bmp", ".png", ".bpg", ".svg",
+               ".heif", ".psd"],
+    "Docs": [".oxps", ".pages", ".pdf", ".xlsx", ".xls", ".doc", ".docx", ".odt", ".ppt", ".pptx"],
+    "Audio": [".aac", ".aa", ".aax", ".act", ".aiff", ".alac", ".amr", ".ape", ".au", ".awb",
+              ".dss", ".dvf", ".flac", ".gsm", ".iklax", ".ivs", ".m4a", ".m4b", ".m4p", ".mmf",
+              ".mp3", ".mpc", ".msv", ".nmf", ".ogg, .oga, .mogg", ".opus", ".ra, .rm", ".raw",
+              ".rf64", ".sln", ".tta", ".voc", ".vox", ".wav", ".wma", ".wv", ".webm"],
+    "Video": [".avi", ".flv", ".wmv", ".mov", ".mp4", ".webm", ".vob", ".mng",
+              ".qt", ".mpg", ".mpeg", ".3gp"]
+}
+
+# Path for the source directory
+path = Path('path_to_source_directory')  # e.g. Path('C:/Users/yourname/Downloads')
+
+def organize_files():
+    for directory, file_formats in DIRECTORIES.items():
+        for file_format in file_formats:
+            for file in path.glob(f"*{file_format}"):
+                new_directory = path.joinpath(directory)
+                new_directory.mkdir(exist_ok=True)  # make directory if it doesn't exist
+                file.rename(new_directory.joinpath(file.name))
+
+if __name__ == "__main__":
+    organize_files()
